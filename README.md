@@ -20,3 +20,15 @@ git clone https://github.com/yourusername/windows-cleanup-script.git
 3. Double-click cleanup.bat to run the script.
 
 4. Follow the on-screen instructions to confirm the cleaning process.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contribution
+
+Contributions are welcome! If you would like to contribute to this project, feel free to open an issue or submit a pull request.
+
+## Disclaimer
+
+This script is provided as-is without any warranties. Use it at your own risk. Always review the code before running it on your system and ensure that it meets your requirements.
