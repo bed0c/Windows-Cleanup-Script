@@ -10,9 +10,7 @@ This script is designed to help Windows users clean unnecessary files from their
 
 ## Usage
 
-1. Clone this repository to your local machine:
-
-git clone https://github.com/yourusername/windows-cleanup-script.git
+1. Clone this repository to your local machine.
 
 2. Navigate to the directory where the script is located.
 
