@@ -1,10 +1,39 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo Cleaning unnecessary files...
+echo Windows Cleanup Script
 
-rem Get the size and count of temporary files and prefetch files
-for %%d in ("%temp%" "%systemdrive%\Windows\Prefetch") do (
+rem List cleanup options
+echo.
+echo 1. Clean temporary files (%temp%)
+echo 2. Clean prefetch files (%systemdrive%\Windows\Prefetch)
+echo 3. Clean both
+echo 4. Exit
+
+set /p "choice=Enter your choice: "
+
+if "%choice%"=="1" (
+    set "cleanup_dirs=%temp%"
+    set "cleanup_label=Temporary Files"
+) else if "%choice%"=="2" (
+    set "cleanup_dirs=%systemdrive%\Windows\Prefetch"
+    set "cleanup_label=Prefetch Files"
+) else if "%choice%"=="3" (
+    set "cleanup_dirs=%temp% %systemdrive%\Windows\Prefetch"
+    set "cleanup_label=Temporary and Prefetch Files"
+) else if "%choice%"=="4" (
+    echo Exiting script...
+    exit /b
+) else (
+    echo Invalid choice. Please enter a valid option.
+    pause
+    exit /b
+)
+
+echo Cleaning %cleanup_label%...
+
+rem Perform cleanup for each directory
+for %%d in (%cleanup_dirs%) do (
     set "FileCount=0"
     set "TotalSize=0"
     for /r %%i in (%%d\*) do (
@@ -15,22 +44,10 @@ for %%d in ("%temp%" "%systemdrive%\Windows\Prefetch") do (
     if !FileCount! gtr 0 (
         echo Total size of unnecessary files in %%~nd: !TotalSize! bytes
         echo Total number of unnecessary files in %%~nd: !FileCount!
-        set "CleanupLocations=!CleanupLocations! "%%~nd""
     )
+    echo Cleaning %%d...
+    del /f /q "%%~fd\*.*"
 )
 
-rem Ask the user for confirmation to proceed with cleaning
-set "Confirm="
-set /p "Confirm=Do you want to proceed with cleaning? (Y/N): "
-if /i "%Confirm%"=="Y" (
-    echo Cleaning unnecessary files...
-    for %%d in (%CleanupLocations%) do (
-        echo Cleaning %%d...
-        del /f /q "%%~fd\*.*"
-    )
-    echo Unnecessary files cleaned.
-) else (
-    echo Cleaning canceled.
-)
-
+echo Cleaning completed.
 pause
